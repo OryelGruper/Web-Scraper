@@ -14,7 +14,8 @@ public class Myscraper {
     private static final String JobTitle =") > li.c2 > a";
     private static final String JobSalary =") > li.c2 > span.is_visibility_salary";
     private static final String JobLocation =") > li.c2 > span.location";
-    private static int PageLimit = 3;
+    private static int NumberOfOffers;
+
 
 
     public static void main(String[] args) {
@@ -23,11 +24,14 @@ public class Myscraper {
         options.addArguments("--headless");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1400,800");
-        //options.setBinary("D:\\Programs\\Google\\Chrome\\Application\\chrome.exe");
+        options.setBinary("D:\\Programs\\Google\\Chrome\\Application\\chrome.exe");
         WebDriver driver = new ChromeDriver(options);
         Scanner Scanner = new Scanner(System.in);
         System.out.println("Choose number of pages: ");
+
         int NumberOfPages = Integer.parseInt(Scanner.nextLine());
+        System.out.println("Choose number of Offers (Max:20): ");
+        NumberOfOffers = Integer.parseInt(Scanner.nextLine());
         for (int j = 1; j <= NumberOfPages; j++) {
             driver.get(SiteURL+j);
             GetAllJobs(driver);
@@ -35,7 +39,7 @@ public class Myscraper {
     }
 
     private static void GetAllJobs(WebDriver driver){
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= NumberOfOffers; i++) {
             JobOffers jobOffers = new JobOffers();
             jobOffers.setJobName(GetJobName(driver, i));
             jobOffers.setJobPosition(GetJobName(driver,i));
